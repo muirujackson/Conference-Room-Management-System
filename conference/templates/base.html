@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conference Room Booking System</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-brand">Conference Rooms</div>
+            <div class="nav-search">
+                <input type="text" placeholder="Search..." id="searchInput">
+                <button type="submit" id="searchButton">Search</button>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+    <h2>Available Rooms</h2>
+  <div class="card-container">
+    {% for room in rooms %}
+      <div class="card">
+        {% if room.image %}
+          <img src="{{ room.image.url }}" alt="{{ room.name }}" class="card-image">
+        {% endif %}
+        <div class="card-content">
+          <h3>{{ room.name }}</h3>
+          <p>Capacity: {{ room.capacity }}</p>
+          <p>Location: {{ room.location }}</p>
+          <a href="{% url 'room_detail' room.id %}" class="card-link">View Details</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+    <section class="features">
+        <div class="container">
+            <h2>Features</h2>
+            <div class="feature-items">
+                <div class="feature-item">
+                    <h3>Easy Booking</h3>
+                    <p>Quick and easy room booking process.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Customizable Rooms</h3>
+                    <p>Rooms tailored to your needs.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>24/7 Support</h3>
+                    <p>We're here to help at any time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <main>
+        
+        <section class="form-section">
+            <h2>Book a Room</h2>
+            <form id="bookingForm">
+                <div class="form-group">
+                    <label for="room">Room:</label>
+                    <select id="room" name="room">
+                        <option value="Room A">Room A</option>
+                        <option value="Room B">Room B</option>
+                        <option value="Room C">Room C</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="time">Time:</label>
+                    <input type="time" id="time" name="time" required>
+                </div>
+                <button type="submit">Book Now</button>
+            </form>
+        </section>
+        <section class="booking-list-section">
+            <h2>Upcoming Bookings</h2>
+            <ul id="bookingList"></ul>
+        </section>
+        <h1>Conference Room Management System</h1>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% block content %}
+    {% endblock %}
+    </main>
+    <script src="{% static 'js/script.js' %}" type="text/javascript"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>{{ room.name }}</h2>
+  <p>Capacity: {{ room.capacity }}</p>
+  <h3>Bookings</h3>
+  <ul>
+    {% for booking in bookings %}
+      <li>{{ booking.start_time }} to {{ booking.end_time }} - {{ booking.user.username }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
