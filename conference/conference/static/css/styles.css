@@ -258,3 +258,18 @@ footer {
   .card-link:hover {
     background-color: #0056b3;
   }
+
+  table.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+table.custom-table, table.custom-table th, table.custom-table td {
+    border: 1px solid black;
+}
+table.custom-table th, table.custom-table td {
+    padding: 8px;
+    text-align: left;
+}
+table.custom-table th {
+    background-color: #f2f2f2;
+}

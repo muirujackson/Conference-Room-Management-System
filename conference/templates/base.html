@@ -11,6 +11,11 @@
     <header>
         <nav>
             <div class="nav-brand">Conference Rooms</div>
+            <a href="{% url 'room_list' %}">Home</a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'user_bookings' %}">My Bookings</a>
+            
+        {% endif %}
             <div class="nav-search">
                 <input type="text" placeholder="Search..." id="searchInput">
                 <button type="submit" id="searchButton">Search</button>

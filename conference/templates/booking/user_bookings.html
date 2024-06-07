@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <h2>My Bookings</h2>
+  {% if bookings %}
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th>Room</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Status</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for booking in bookings %}
+          <tr>
+            <td>{{ booking.room.name }}</td>
+            <td>{{ booking.start_time }}</td>
+            <td>{{ booking.end_time }}</td>
+            <td>{{ booking.get_status_display }}</td>
+            <td>{{ booking.purpose }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>You have no bookings.</p>
+  {% endif %}
+{% endblock %}

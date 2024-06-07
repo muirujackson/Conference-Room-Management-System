@@ -14,4 +14,18 @@
     {{ form.as_p }}
     <button type="submit">Book</button>
   </form>
+  <script>
+    $(document).ready(function() {
+        $('#id_start_time').datepicker({
+            format: 'yyyy-mm-dd hh:ii',
+            autoclose: true,
+            todayHighlight: true
+        });
+        $('#id_end_time').datepicker({
+            format: 'yyyy-mm-dd hh:ii',
+            autoclose: true,
+            todayHighlight: true
+        });
+    });
+  </script>
 {% endblock %}

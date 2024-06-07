@@ -12,22 +12,35 @@ def create_booking(request, room_id):
     if request.method == 'POST':
         form = BookingForm(request.POST)
         if form.is_valid():
-            booking = form.save(commit=False)
-            booking.user = request.user
-            booking.room = room
+            start_time = form.cleaned_data['start_time']
+            end_time = form.cleaned_data['end_time']
+            purpose = form.cleaned_data['purpose']
 
             # Check for overlapping bookings
             if Booking.objects.filter(
                 room=room,
-                approved=True,
-                start_time__lt=booking.end_time,
-                end_time__gt=booking.start_time
+                status='approved',
+                start_time__lt=end_time,
+                end_time__gt=start_time
             ).exists():
                 messages.error(request, 'This room is already booked for the selected time period.')
             else:
+                booking = Booking(
+                    user=request.user,
+                    room=room,
+                    start_time=start_time,
+                    end_time=end_time,
+                    purpose=purpose,
+                    status='pending'
+                )
                 booking.save()
                 messages.success(request, 'Booking request created successfully. Waiting for approval.')
                 return redirect('room_detail', room_id=room.id)
     else:
         form = BookingForm()
     return render(request, 'booking/create_booking.html', {'form': form, 'room': room})
+
+@login_required
+def user_bookings(request):
+    bookings = Booking.objects.filter(user=request.user).order_by('-start_time')
+    return render(request, 'booking/user_bookings.html', {'bookings': bookings})
